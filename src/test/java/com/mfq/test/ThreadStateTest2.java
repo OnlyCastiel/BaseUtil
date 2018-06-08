@@ -13,8 +13,11 @@ public class ThreadStateTest2 {
 
         http1.start();
         http2.start();
+
+
         http1.getState();
         try {
+            http1.sleep(30*1000);
             http2.join(30*1000);
         }catch (InterruptedException e){ }
     }

@@ -5,9 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 
 /**
@@ -19,6 +17,7 @@ import java.util.concurrent.Executors;
  * 设置线程的最大值，防止由于海量并发接入导致线程耗尽。由于它的底层通信机制依然使用同步阻塞IO，所以被称为 “伪异步”。
  *
  * 缺点：
+ * 假如所有可用线程都阻塞住了,后续的IO都将在队列中排队
  */
 public class BIOChatServer {
 
@@ -95,5 +94,21 @@ class ClientHandle implements Runnable{
                 e.printStackTrace();
             }
         }
+    }
+}
+
+
+class TimeServerHandlerExecutePool {
+
+    private ExecutorService executor;
+
+    public TimeServerHandlerExecutePool(int maxPoolSize, int queueSize) {
+        executor = new ThreadPoolExecutor(Runtime.getRuntime()
+                .availableProcessors(), maxPoolSize, 120L, TimeUnit.SECONDS,
+                new ArrayBlockingQueue<java.lang.Runnable>(queueSize));
+    }
+
+    public void execute(Runnable task) {
+        executor.execute(task);
     }
 }
