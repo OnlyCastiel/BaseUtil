@@ -17,19 +17,19 @@ public class BaseSortUtil {
 //		sort5(data);
         System.out.println("����6");
         binaryInsertSort(data);
-        //�۰�����
+        //二分插入排序
 //		binaryInsertSort(data);
 
-        //ð������
+        //冒泡排序
 //		BubbleSort(data);
 
-        //Ͱ����
+        //桶排序
 //		BucketSort(data, -49, 31);
 
-        //ֱ�Ӳ�������
+        //ֱ插入排序
 //		InsertSort(data);
 
-        //�鲢����
+        //归并排序
 //		MergeSort(data);
     }
 
@@ -52,7 +52,7 @@ public class BaseSortUtil {
 
 
     /*
-     * 二分插入排序
+     * 插入排序
      * 从第一个元素开始，该元素可以认为已经被排序
      * 取出下一个元素，在已经排序的元素序列中从后向前扫描
      * 如果该元素（已排序）大于新元素，将该元素移到下一位置
@@ -87,12 +87,11 @@ public class BaseSortUtil {
 
 
 
-    /*
-     * ð������ͨ������ѭ����ÿһ���ڲ�ѭ�����Ὣ��ǰlength-1-i������Ԫ����ȡ��length-1-iλ��
-     * ���ѭ������length�ι��󣬸�����Ϊ��������
+    /**
+     *
      */
     public static void BubbleSort(DataSort[] data){
-        System.out.println("ð������֮ǰ");
+        System.out.println("冒泡排序开始：");
         System.out.println(java.util.Arrays.toString(data));
         for(int i=0;i<data.length-1;i++){
             for(int j=0;j<data.length-1-i;j++){
@@ -104,7 +103,7 @@ public class BaseSortUtil {
             }
             System.out.println(java.util.Arrays.toString(data));
         }
-        System.out.println("ð���������");
+        System.out.println("冒泡排序结束：");
         System.out.println(java.util.Arrays.toString(data));
     }
 
@@ -115,7 +114,7 @@ public class BaseSortUtil {
      * ��������ÿ��ֵ����Ϊǰ��Ԫ��ֵ֮�ͣ���Ϊ��ֵӦ�����ֵ�λ��
      */
     public static void BucketSort(DataSort[] data,int min,int max){
-        System.out.println("Ͱ����֮ǰ");
+        System.out.println("桶排序开始：");
         System.out.println(java.util.Arrays.toString(data));
         int arrayLength= data.length;
         int[] bucket=new int[max-min];
@@ -134,7 +133,7 @@ public class BaseSortUtil {
 //		for (int k = arrayLength - 1; k >= 0; k--) {
 //			data[--bucket[temp[k].data - min]] = temp[k];
 //		}
-        System.out.println("Ͱ����֮��");
+        System.out.println("桶排序结束：");
         System.out.println(java.util.Arrays.toString(data));
     }
 
@@ -143,7 +142,7 @@ public class BaseSortUtil {
      * ��֮���Ԫ��ֱ����ǰ����Ԫ�رȽϣ��ҵ���Ԫ��Ӧ���ڵ�λ�ã������ȥ
      */
     public static void InsertSort(DataSort[] data){
-        System.out.println("��ʼֱ�Ӳ�������");
+        System.out.println("插入排序开始：");
         System.out.println(java.util.Arrays.toString(data));
         int arrayLength=data.length;
         for (int i=1;i<arrayLength;i++){
@@ -156,7 +155,7 @@ public class BaseSortUtil {
                 data[j+1]=temp;
             }
         }
-        System.out.println("����ֱ�Ӳ�������");
+        System.out.println("插入排序结束：");
         System.out.println(java.util.Arrays.toString(data));
     }
 
@@ -167,10 +166,10 @@ public class BaseSortUtil {
      * �ٽ��������鲢������鲢Ǯ��������������鲢��������Ȼ����
      */
     public static void MergeSort(DataSort[] data){
-        System.out.println("�鲢����ǰ");
+        System.out.println("归并排序开始：");
         System.out.println(java.util.Arrays.toString(data));
         DataSort(data,0,data.length-1);
-        System.out.println("�鲢�����");
+        System.out.println("归并排序结束：");
         System.out.println(java.util.Arrays.toString(data));
     }
     public static void DataSort(DataSort[] data,int left,int right){
