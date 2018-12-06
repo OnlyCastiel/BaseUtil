@@ -50,6 +50,19 @@
             <artifactId>guava</artifactId>
             <version>19.0</version>
         </dependency>
+
+        <!--图片转视频工具-->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv-platform</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+
     </dependencies>
 
 

@@ -54,7 +54,7 @@ public class TextHelp {
         Matcher m = p.matcher(htmlStr);
 
         if(m.find()){
-            imgList = new ArrayList<>();
+            imgList = new ArrayList<String>();
             int num = m.groupCount();
             for(int i=1 ; i<= num ;i++ ){
                 String imageSrcStr = m.group(1);
@@ -90,7 +90,7 @@ public class TextHelp {
         Pattern p_html = Pattern.compile(reg_html, Pattern.CASE_INSENSITIVE);
         Matcher m_html = p_html.matcher(htmlStr);  // 过滤html标签
         if(m_html.find()){
-            textList = new ArrayList<>();
+            textList = new ArrayList<String>();
             int num = m_html.groupCount();
             int start = 0;
             int end = 0;
@@ -135,7 +135,7 @@ public class TextHelp {
         Matcher m = p.matcher(htmlStr);
 
         if(m.find()){
-            contentList = new ArrayList<>();
+            contentList = new ArrayList<String>();
             int num = m.groupCount();
             int start = 0;
             int end = 0;

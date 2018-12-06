@@ -54,12 +54,9 @@ public class GreenPosFinder {
         try {
             GreenPosFinder greenPosFinder = new GreenPosFinder();
             BufferedImage img = ImgLoader.load("D:\\编程资料\\imageProgram\\1\\Person_0001.png");
-            //BufferedImage img = ImgLoader.load("D:\\编程资料\\imageProgram\\1\\676075921077601450.jpg");
-            //BufferedImage img = ImgLoader.load("G:\\硅谷\\img\\IMG_0004.JPG");
             greenPosFinder.find(img);
 
             ImageIO.write(img, "png", new File("D:\\编程资料\\imageProgram\\1\\Person_test1.png"));
-            //ImageIO.write(img, "png", new File("D:\\编程资料\\imageProgram\\1\\676075921077601450_test.jpg"));
         } catch (IOException e) {
             System.out.println("图片未找到");
         }
