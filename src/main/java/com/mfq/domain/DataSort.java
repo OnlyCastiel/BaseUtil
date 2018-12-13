@@ -16,7 +16,7 @@ public class DataSort implements Comparable<DataSort>{
         return "[" + data +"]";
     }
 
-    @Override
+
     public int compareTo(DataSort o) {
         return this.data>o.data ? 1:(this.data<o.data ? -1:0);
     }

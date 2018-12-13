@@ -13,6 +13,9 @@ public class ImageUtil {
 
 
 
+    //图片裁切
+
+
     //图片增加水印
     public void coverMark(File targetImg) {
         try {
@@ -26,25 +29,22 @@ public class ImageUtil {
             image = new BufferedImage(wideth, height, 1);
             g = image.createGraphics();
             g.drawImage(src, 0, 0, wideth, height, (ImageObserver)null);
-            File logImgSmall = new File(this.getClass().getClassLoader().getResource("logo1.png").getFile());
-            File logImgBig = new File(this.getClass().getClassLoader().getResource("logo2.png").getFile());
-            Image src_log;
+            File logImg = new File(this.getClass().getClassLoader().getResource("raypicHalfLog.png").getFile());
 
-            if(wideth > 1000){
-                src_log = ImageIO.read(logImgBig);
-            }else{
-                src_log = ImageIO.read(logImgSmall);
-            }
+            Image src_log = ImageIO.read(logImg);
+            src_log = ((BufferedImage) src_log).getSubimage(0,0,wideth,height);
 
             int wideth_log = src_log.getWidth((ImageObserver)null);
             int height_log = src_log.getHeight((ImageObserver)null);
 
+            g.drawImage(src_log, 0, 0, wideth, height, (ImageObserver)null);
 
-            if (wideth > 1000) {//根据图片尺寸，水印打在不同的位置
+
+/*            if (wideth > 1000) {//根据图片尺寸，水印打在不同的位置
                 g.drawImage(src_log, 8, 8, wideth_log, height_log, (ImageObserver)null);
             }else{
                 g.drawImage(src_log, 0, 6, wideth_log, height_log, (ImageObserver)null);
-            }
+            }*/
             g.dispose();
             ImageIO.write(image, "jpg", targetImg);
 
@@ -66,13 +66,14 @@ public class ImageUtil {
         }else{
             for (int i=0; i< jpgs.length ;i++){
                 try {
-                    String imgType = FileType.getFileType(jpgs[i]);
+/*                    String imgType = FileType.getFileType(jpgs[i]);
                     if(StringUtils.isEmpty(imgType)){
                         jpgs[i].delete();
                     }
                     else{
                         imageUtil.coverMark(jpgs[i]);
-                    }
+                    }*/
+                    imageUtil.coverMark(jpgs[i]);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
