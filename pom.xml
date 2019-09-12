@@ -63,7 +63,25 @@
             <version>1.4.2</version>
         </dependency>
 
+        <!--图片处理工具-->
+<!--        <dependency>
+            <groupId>jmagick</groupId>
+            <artifactId>jmagick</artifactId>
+            <version>6.6.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.im4java</groupId>
+            <artifactId>im4java</artifactId>
+            <version>1.4.0</version>
+        </dependency>-->
+
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>cedarsoft-thirdparty</id>
+            <url>http://maven.cedarsoft.com/content/repositories/thirdparty/</url>
+        </repository>
+    </repositories>
 
 </project>
