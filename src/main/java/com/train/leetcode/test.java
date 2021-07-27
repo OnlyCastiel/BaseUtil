@@ -11,7 +11,7 @@ public class test {
 
         String str[] = new String[]{"one","two","three","four","five"};
 
-        People humens[] = new People[]{new People(15,"张"),new People(17,"王"),new People(18,"刘")};
+        //People humens[] = new People[]{new People(15,"张"),new People(17,"王"),new People(18,"刘")};
 
 
 
