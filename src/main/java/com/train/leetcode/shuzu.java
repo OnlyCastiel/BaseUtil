@@ -339,7 +339,57 @@ public class shuzu {
 
 
 
-        public static void main(String[] args) {
+
+
+    private static void swap(int[] nums,int x,int y){
+        int temp = nums[x];
+        nums[x] = nums[y];
+        nums[y] = temp;
+    }
+
+
+    /**
+     * 对于一个有正有负的整数数组，请找出总和最大的连续数列的和。
+     *
+     * 核心思路：遍历数组，对于以元素nums[i]为结尾的数组，其最大值f(i) = max(f(i-1)+nums[i],nums[i])
+     * 此递推公式可以简化为，判断f(i-1)是否大于0，如果大于0，则直接加上nums[i],小于0，则直接使用nums[i]
+     * 然后判断此时f(i) 是否大于在遍历过程中的maxNum;
+     *
+     * 升阶：如果要找出这个最大连续数列的范围，如何在递归中记录
+     * 维护一个start=0,end=0；当max取值为f(i-1)+nums[i]时，end++;
+     * 当取值为nums[i]是，start =i
+     */
+
+    private static int START_INDEX = 0;
+    private static int END_INDEX = 0;
+
+    private static int jisuanSum(int[] nums){
+        int maxNum=0;
+        int correntSum = 0;
+        int start = 0;
+        int end = 0;
+        for(int i=0;i<nums.length;i++){
+            if(correntSum > 0){
+                end = i;
+                correntSum += nums[i];
+            }else{
+                start = i;
+                end = i;
+                correntSum = nums[i];
+            }
+            if(correntSum > maxNum){
+                START_INDEX = start;
+                END_INDEX = end;
+                maxNum = correntSum;
+            }
+        }
+        return maxNum;
+    }
+
+
+
+
+    public static void main(String[] args) {
 /*        int[][] matrix = {{5, 1, 9, 11},
                 {2, 4, 8, 10},
                 {13, 3, 6, 7},
@@ -363,18 +413,15 @@ public class shuzu {
         sortColors(a);
         System.out.println(Arrays.toString(a));*/
 
-
+/*
         int[]  a = {-1,2,0};
-        System.out.println(findKthLargest(a,2));
+        System.out.println(findKthLargest(a,2));*/
+
+        int[] nums = {1,2,3,-6,1};
+        System.out.println(jisuanSum(nums));
+        System.out.println(START_INDEX);
+        System.out.println(END_INDEX);
     }
 
-
-
-
-    private static void swap(int[] nums,int x,int y){
-        int temp = nums[x];
-        nums[x] = nums[y];
-        nums[y] = temp;
-    }
 
 }
