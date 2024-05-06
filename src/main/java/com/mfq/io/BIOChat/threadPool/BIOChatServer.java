@@ -1,19 +1,23 @@
-package com.mfq.BIOChat.multiThread;
+package com.mfq.io.BIOChat.threadPool;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.*;
 
 
 /**
- * 多线程版BIO连接
+ * 线程池版BIO连接
  *
- * 优点：支持多客户端连接
+ * 优点：为了改进一线程一连接模型，后来又演进出了一种通过线程池和消息队列实现N个线程处理M个客户端的模型。
+ * 当有新的客户端接入的时候，将客户端的Socket封装成一个Task（该任务实现java.lang.Runnable接口）投递到后端的线程池中进行处理,
+ * JDK的线程池维护一个消息队列和N个活跃线程对消息队列中的任务进行处理。通过线程池可以灵活的调配线程资源，
+ * 设置线程的最大值，防止由于海量并发接入导致线程耗尽。由于它的底层通信机制依然使用同步阻塞IO，所以被称为 “伪异步”。
  *
- * 缺点：每当有一个新的客户端请求接入时，服务端必须创建一个新的线程处理新接入的客户端链路，一个线程只能处理一个客户端连接。
- * 但是线程的开销是很昂贵的，以M计算
- * 在高性能服务器应用领域，往往需要面向成千上万个客户端的并发连接，这种模型显然无法满足高性能、高并发接入的场景。
- * 系统会发生线程堆栈溢出、创建新线程失败等问题，并最终导致进程宕机或者僵死，不能对外提供服务。
+ * 缺点：
+ * 假如所有可用线程都阻塞住了,后续的IO都将在队列中排队
  */
 public class BIOChatServer {
 
@@ -26,12 +30,15 @@ public class BIOChatServer {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(PORT);
+            ExecutorService executor = Executors.newCachedThreadPool();
+
             while (true){
                 Socket socket = serverSocket.accept();
                 connectNum++;
                 System.out.println("get the " + connectNum +" connection !" );
 
-                new ClientHandle(socket).start();
+                executor.execute(new ClientHandle(socket));
+
             }
 
         } catch (IOException e) {
@@ -52,7 +59,7 @@ public class BIOChatServer {
     }
 }
 
-class ClientHandle extends Thread{
+class ClientHandle implements Runnable{
 
     private Socket socket;
 
@@ -87,5 +94,21 @@ class ClientHandle extends Thread{
                 e.printStackTrace();
             }
         }
+    }
+}
+
+
+class TimeServerHandlerExecutePool {
+
+    private ExecutorService executor;
+
+    public TimeServerHandlerExecutePool(int maxPoolSize, int queueSize) {
+        executor = new ThreadPoolExecutor(Runtime.getRuntime()
+                .availableProcessors(), maxPoolSize, 120L, TimeUnit.SECONDS,
+                new ArrayBlockingQueue<java.lang.Runnable>(queueSize));
+    }
+
+    public void execute(Runnable task) {
+        executor.execute(task);
     }
 }

@@ -697,15 +697,169 @@ public class chujisuanfa {
             }
         }
         System.out.println(ji);
+        Arrays.sort(nums,0,ji);
+        Arrays.sort(nums,ji,nums.length);
 
 
     }
 
 
-    public static void main(String[] args) {
-        for(int i=1;i>0;){
-
+    /**
+     * 位1的个数
+     * 编写一个函数，输入是一个无符号整数（以二进制串的形式），返回其二进制表达式中数字位数为 '1' 的个数（也被称为汉明重量）
+     * @param n
+     */
+    public static int hammingWeight(int n) {
+        int count = 0;
+        if(n == 0){
+            return 0;
         }
+        //依次位移,32次
+        for(int i = 0;i < 32 && n != 0;i++){
+            if((n & 1) == 1){
+                count ++;
+            }
+            n >>>= 1;
+        }
+        return count;
+    }
+
+
+    /**
+     * TODO 十进制数获取二进制串
+     * @param n
+     * @return
+     */
+    public static int hammingWeight1(int n) {
+        int count = 0;
+        if(n == 0){
+            return 0;
+        }
+        //二分法位移操作
+        if(n >>> 16 == 0){ n <<= 16; count += 16; }
+        if(n >>> 24 == 0){ n <<= 8; count += 8;}
+        return count;
+    }
+
+
+    /**
+     * 两个整数之间的 汉明距离 指的是这两个数字对应二进制位不同的位置的数目。
+     *
+     * 给你两个整数 x 和 y，计算并返回它们之间的汉明距离。
+     *
+     * 核心思路：亦或运算，不同为1，相同为0
+     */
+    public static int hammingDistance(int x, int y) {
+        int num = x ^ y;
+        return hammingWeight(num);
+    }
+
+
+    /**
+     * 颠倒给定的 32 位无符号整数的二进制位。
+     *
+     * 思路1，基于hammingWeight基础上，每次移位操作时，进行1的加权，
+     * sum <<< 1 + 1|0
+     * 左移一位，然后加上当前位的二进制值
+     *
+     * 思路2：换位，对于二进制的每一位，低16位于高16位进行交换，获取的方式可以通过与  (n & (1 << i)) >>> (i * 2 - 31) 取得，即先左移后右移
+     *
+     *
+     * @param n
+     * @return
+     */
+    public static int reverseBits(int n) {
+        int sum = 0;
+        for(int i =0; i<32;i++){
+            sum <<= 1;
+            if((n & 1) == 1){
+                sum += 1;
+            }
+            n >>= 1;
+        }
+        return sum;
+    }
+
+
+    /**
+     *有效的括号
+     * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+     *
+     * 有效字符串需满足：
+     *
+     * 左括号必须用相同类型的右括号闭合。
+     * 左括号必须以正确的顺序闭合。
+     *
+     * 思路，通过堆栈进行匹配，弹出
+     * @param s
+     */
+    public static boolean isValid(String s) {
+        char[] chars = s.toCharArray();
+        Stack<Character> stack = new Stack<>();
+        for(char ch : chars){
+            if(ch == '(' || ch == '{' || ch == '['){
+                stack.push(ch);
+                continue;
+            }
+            if(stack.isEmpty()){
+                return false;
+            }
+            Character pop = stack.pop();
+            char px = pop.charValue();
+            if((px == '(' && ch == ')') || (px == '{' && ch == '}') || (px == '[' && ch == ']')){
+                continue;
+            }else{
+                return false;
+            }
+        }
+        if(stack.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 给定一个包含 [0, n] 中 n 个数的数组 nums ，找出 [0, n] 这个范围内没有出现在数组中的那个数。
+     *
+     * 思路1：排序后进行一边遍历，找到第一个不同的返回
+     *
+     * 思路2：对于数组nums 与 [0,n] 每个数进行异或操作，最后留下的那个数组，代表仅出现一次，即nums中没有的那个数
+     *
+     * 思路3：等差数列求和[0,n]，减去数组nums每一个数，得到结果即为最终结果
+     *
+     * @param nums
+     */
+    public static int missingNumber(int[] nums) {
+/*        Arrays.sort(nums);
+        for(int i=0;i<nums.length;i++){
+            if(i != nums[i]){
+                return i;
+            }
+        }
+        return nums.length;*/
+        int reduce = 0;
+        for(int i=0;i<nums.length;i++){
+            reduce = reduce ^ nums[i] ^ i;
+        }
+        return reduce ^ nums.length;
+    }
+
+
+
+    public static void main(String[] args) {
+
+        List<Integer> list = new ArrayList<>(null);
+
+        System.out.println(list);
+        System.out.println(isValid(")"));
+
+        System.out.println(reverseBits(0b00000010100101000001111010011100));
+
+
+        System.out.println(hammingDistance(2,1));
+
+        //int x = hammingWeight(0b00000000000000000000000000001011);
+
 
 /*        int[] nums = new int[]{6,5,4,3,2,1};
         int niXuNum = getNiXuNum(nums, 0, nums.length - 1);
@@ -714,9 +868,9 @@ public class chujisuanfa {
 /*        int[] nums = new int[]{2,2,6,1,2,2,3,3};
         singleNumber1(nums);*/
 
-/*        int[] nums = new int[]{2,4,6,1,3,4,6};
+        int[] nums = new int[]{2,4,6,1,3,4,6};
         sortJO(nums);
-        System.out.println(Arrays.toString(nums));*/
+        System.out.println(Arrays.toString(nums));
 
 
 //        int[] intersect = intersect(new int[]{4, 9, 5}, new int[]{9, 4, 9, 8, 4});

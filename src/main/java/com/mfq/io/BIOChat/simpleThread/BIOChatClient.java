@@ -1,37 +1,32 @@
-package com.mfq.BIOChat.simpleThread;
+package com.mfq.io.BIOChat.simpleThread;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.ServerSocket;
+import java.io.*;
 import java.net.Socket;
 
-public class BIOChatService {
+public class BIOChatClient {
+
+    private static final String IP_ADDR = "127.0.0.1";
 
     private static int PORT = 9999;
 
     public static void main(String[] args) {
-        ServerSocket serverSocket = null;
         Socket socket = null;
         DataOutputStream dataOutputStream = null;
         DataInputStream dataInputStream = null;
-
         try {
-            serverSocket = new ServerSocket(PORT);
-            socket = serverSocket.accept();
+            socket = new Socket(IP_ADDR,PORT);
 
-            dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataInputStream = new DataInputStream(socket.getInputStream());
 
-            //持续收取客户端消息
             while (true){
-                String message = dataInputStream.readUTF();
-                System.out.println("seceive from client: "+ message);
+                String userNeed = new BufferedReader(new InputStreamReader(System.in)).readLine();
+                dataOutputStream.writeUTF(userNeed);
 
-                dataOutputStream.writeUTF("I have receive from you :" +message);
+                String result = dataInputStream.readUTF();
+                System.out.println("receive from server :" + result);
             }
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }finally {
             try {
@@ -49,11 +44,7 @@ public class BIOChatService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            try {
-                serverSocket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
+
     }
 }

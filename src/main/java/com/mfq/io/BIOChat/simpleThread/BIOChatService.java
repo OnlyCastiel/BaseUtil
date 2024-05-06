@@ -1,32 +1,37 @@
-package com.mfq.BIOChat.simpleThread;
+package com.mfq.io.BIOChat.simpleThread;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 
-public class BIOChatClient {
-
-    private static final String IP_ADDR = "127.0.0.1";
+public class BIOChatService {
 
     private static int PORT = 9999;
 
     public static void main(String[] args) {
+        ServerSocket serverSocket = null;
         Socket socket = null;
         DataOutputStream dataOutputStream = null;
         DataInputStream dataInputStream = null;
+
         try {
-            socket = new Socket(IP_ADDR,PORT);
+            serverSocket = new ServerSocket(PORT);
+            socket = serverSocket.accept();
 
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataInputStream = new DataInputStream(socket.getInputStream());
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
+            //持续收取客户端消息
             while (true){
-                String userNeed = new BufferedReader(new InputStreamReader(System.in)).readLine();
-                dataOutputStream.writeUTF(userNeed);
+                String message = dataInputStream.readUTF();
+                System.out.println("seceive from client: "+ message);
 
-                String result = dataInputStream.readUTF();
-                System.out.println("receive from server :" + result);
+                dataOutputStream.writeUTF("I have receive from you :" +message);
             }
-        } catch (Exception e) {
+
+        } catch (IOException e) {
             e.printStackTrace();
         }finally {
             try {
@@ -44,7 +49,11 @@ public class BIOChatClient {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 }

@@ -1,4 +1,4 @@
-package com.mfq.BIOChat.multiThread;
+package com.mfq.io.BIOChat.multiThread;
 
 import java.io.*;
 import java.net.Socket;

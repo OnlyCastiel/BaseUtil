@@ -1,4 +1,4 @@
-package com.mfq.NIOChat;
+package com.mfq.io.NIOChat;
 
 import com.base.NIO.NIOClient;
 

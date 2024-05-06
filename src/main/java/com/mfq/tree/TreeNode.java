@@ -1,4 +1,4 @@
-package com.train.leetcode.tree;
+package com.mfq.tree;
 
 public class TreeNode {
     int val;

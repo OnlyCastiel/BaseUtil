@@ -1,4 +1,4 @@
-package com.mfq.BIOChat.threadPool;
+package com.mfq.io.BIOChat.threadPool;
 
 import java.io.*;
 import java.net.Socket;
