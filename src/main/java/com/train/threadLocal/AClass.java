@@ -1,12 +1,9 @@
-package com.train.baguwen;
+package com.train.threadLocal;
 
 
 import lombok.Data;
-import sun.applet.AppletClassLoader;
 
 import java.util.*;
-import java.util.concurrent.*;
-import java.util.concurrent.locks.ReentrantLock;
 
 @Data
 public class AClass extends BaseClass{

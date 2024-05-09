@@ -1,4 +1,4 @@
-package com.train.baguwen;
+package com.train.threadLocal;
 
 public abstract class BaseClass {
 

@@ -1,4 +1,4 @@
-package com.train.baguwen;
+package com.train.threadLocal;
 
 /**
  * ThreadLocal验证相关设想
