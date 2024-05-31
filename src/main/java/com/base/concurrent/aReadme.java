@@ -1,9 +1,7 @@
 package com.base.concurrent;
 
 
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 本目录主要整理jdk中并发相关的工具类，增加额外注释便于理解
@@ -49,17 +47,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class aReadme {
 
-    private static final long stateOffset = 0;
-    public static void main(String[] args) {
+    private static ReentrantLock lock = new ReentrantLock();
 
-        ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
-        System.out.println(111);
-        System.out.println(222);
-        Thread.currentThread().interrupt();
-        System.out.println(111);
-        System.out.println(111);
-
-    }
 
 }
