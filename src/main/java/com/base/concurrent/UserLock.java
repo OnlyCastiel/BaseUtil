@@ -6,6 +6,7 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 /**
  * 模拟一个独占所的视线
  * 开发者只需要关注锁状态的维护，而不用关注AQS中同步等待队列的入队，出队以及释放锁后唤醒等待线程的操作
+ * 而定义好锁的状态，就可以形成不同的锁，独占锁（可冲入锁）、共享锁(信号量)、以及更复杂的锁
  */
 public class UserLock extends AbstractQueuedSynchronizer {
 
