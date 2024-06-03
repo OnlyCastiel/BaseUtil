@@ -13,7 +13,9 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * synchronized : 保证原子性，通过jvm层面在对象head部的monitor，记录锁标志位设置值来标识是否被锁占用，同时记录了一个指针，指向等待该锁的线程队列；(操作系统层面实现，涉及内核态切换，更消耗性能)
  *
- * CAS: compare and swap ；unsafe提供的原子性操作，比较并替换，操作一个 volatile int state 变量，实现原子性的加锁操作；
+ * CAS: compare and swap ；
+ * unsafe提供的原子性操作，比较并替换，操作一个 volatile int state 变量，实现原子性的加锁操作；
+ * 此操作也可以修改其他内容以实现线程安全（加锁失败线程入队）；
  *
  * AQS （AbstractQueuedSynchronizer）:
  * 同步等待队列模型，实现原子式同步状态管理、阻塞和唤醒功能以及队列模型
@@ -54,6 +56,10 @@ import java.util.concurrent.locks.ReentrantLock;
  * 判断当前持有锁的线程是否是自己，并将state+1
  * 4.1、为什么要在重入的时候将state+1
  * 避免出现错误释放的情况，加多少次锁，就需要释放多少次；在方法调用过程中十分重要；
+ *
+ *
+ * 3、独占锁，和共享锁的区别？
+ * 独占锁，锁对于线程是独占的；而共享锁时允许有多个线程共同持有
  *
  */
 public class aReadme {
